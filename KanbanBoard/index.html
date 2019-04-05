@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='kanbanApp'>
+	<head>
+		<meta charset="UTF-8">
+		<script src="JS/angular.js" > </script>
+		<script src="JS/app.js"></script>
+		<link rel="stylesheet" href="CSS/bootstrap.min.css">
+		<link rel="stylesheet" href="CSS/style.css">
+		<title>Kanban Board</title>
+	</head>
+	<body>
+		<div ng-controller='kanbanController as kc'>
+			<form ng-submit="kc.add()">
+				<span>Nombre:</span>
+				<input type="text" ng-model="newObj.name">
+				<span>Descripcion:</span>
+				<input type="text" ng-model="newObj.desc">
+				<input type="submit" value="Add">
+			</form>
+			<ul class="row">
+				<div class="col-sm-4">
+					<h3>To do</h3>
+					<li ng-repeat="task in kc.tasks | filter:{ status:1}">
+						<h5>{{task.index+1}}</h5>
+						<p>Name: {{task.name}}</p>
+						<p>Description: {{task.desc}}</p>
+						<button ng-click="kc.next(task.index)">Next</button>
+					</li>
+				</div>
+				<div class="col-sm-4">
+					<h3>Doing</h3>
+					<li ng-repeat="task in kc.tasks | filter:{ status:2}">
+						<h5>{{task.index+1}}</h5>
+						<p>Name: {{task.name}}</p>
+						<p>Description: {{task.desc}}</p>
+						<button ng-click="kc.next(task.index)">Next</button>
+						<button ng-click="kc.previous(task.index)">Previous</button>
+					</li>
+				</div>
+				<div class="col-sm-4">
+					<h3>Done</h3>
+					<li ng-repeat="task in kc.tasks | filter:{ status:3}">
+						<h5>{{task.index+1}}</h5>
+						<p>Name: {{task.name}}</p>
+						<p>Description: {{task.desc}}</p>
+						<button ng-click="kc.previous(task.index)">Previous</button>
+					</li>
+				</div>
+			</ul>
+		</div>
+	</body>
+</html>
